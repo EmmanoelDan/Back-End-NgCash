@@ -26,4 +26,18 @@ model Account {
 
   @@map("accounts")
   User User[]
+  CreditedReference Transaction[] @relation("CreditedRelation")
+  DebitedReference Transaction[] @relation("DebitedRelation")
+}
+
+model Transaction {
+  id String @id @default(uuid())
+  debitedAccountId String
+  debitedAccount Account @relation(fields: [debitedAccountId], references: [id], name: "DebitedRelation")
+  creditedAccountId String 
+  creditedAccount Account @relation(fields: [creditedAccountId], references: [id], name: "CreditedRelation")
+  value String?
+  created_at DateTime @default(now())
+  
+  @@map("transactions")
 }
