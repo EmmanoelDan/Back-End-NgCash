@@ -17,18 +17,3 @@ model User {
 
   @@map("users")
 }
-
-model Account {
-  id String @id @default(uuid())
-  balance String
-
-  @@map("accounts")
-}
-
-model Transactions {
-  id String @id @default(uuid())
-  debitedAccountId String
-  creditedAccountId String
-  value Float
-  createdAt DateTime 
-}

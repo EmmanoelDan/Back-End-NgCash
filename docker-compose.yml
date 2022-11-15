@@ -1,0 +1,14 @@
+version: "3"
+services: 
+  database: 
+    image: postgres:10.17
+    environment:
+      POSTEGRES_USER: "postgres"
+      POSTEGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "ngcash_db"
+    ports:
+      - 5432:5432
+    volumes:
+      - pg-data:/var/lib/posgres/data
+volumes:
+  pg-data:
