@@ -1,17 +1,14 @@
 import { Request, Response, Router } from "express";
+import { CreateAccountController } from "./controllers/CreateAccontController";
 import { CreateUserController } from "./controllers/CreateUserController";
 
 const router = Router();
 
 const createUser = new CreateUserController();
-
-router.get('/v1', (req: Request, res: Response)=> {
-    res.status(200).json({
-        Hello: "World"
-    })
-});
+const createAccount = new CreateAccountController();
 
 router.post("/v1/user", createUser.handle)
+router.post("/v1/account", createAccount.handle)
 
 export { router }
 

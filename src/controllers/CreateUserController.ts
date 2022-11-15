@@ -3,12 +3,13 @@ import { prismaClient } from "../database/prismaClient";
 
 export class CreateUserController {
     async handle(request: Request, response: Response){
-        const {username, password} = request.body;
+        const {username, password, accountId} = request.body;
 
-       const user = await prismaClient.user.create({
+        const user = await prismaClient.user.create({
         data: {
             username,
-            password
+            password,
+            accountId
         }
        })
 
