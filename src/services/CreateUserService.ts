@@ -1,14 +1,9 @@
-
 import { hash } from "bcryptjs";
 import { prismaClient } from "../database/prismaClient";
-
-interface UserRequest {
-    username: string;
-    password: string
-}
+import { CreateUserInterface } from "../interfaces/CreateUserInterface";
 
 class CreateUserService {
-    async execute({username, password}: UserRequest){
+    async execute({username, password}: CreateUserInterface){
         if(!username){
             throw new Error("Username incorrect!")
         }

@@ -1,8 +1,5 @@
 import { prismaClient } from "../database/prismaClient";
 
-
-
-
 class UserBalanceService {
     async execute(user_id: string){
         const user = await prismaClient.user.findFirst({
