@@ -1,21 +1,14 @@
 import { hash } from "bcrypt";
 import { Request, Response } from "express";
-import { prismaClient } from "../database/prismaClient";
-import {z} from "zod"
-
-const PASSWORD_VALIDATION_REGEX = /((?=.*\d))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/
+import { prismaClient } from "../../database/prismaClient";
+import { createUserSchema } from "./User";
 
 export class CreateUserController {
     async handle(request: Request, response: Response){
         try {
             const {username, password} = request.body;
 
-            const dataValues = z.object({
-                username: z.string().min(3),
-                password: z.string().regex(PASSWORD_VALIDATION_REGEX, "Invalid Password!").min(8)
-            })
-
-            const credentials = dataValues.safeParse(request.body);
+            const credentials = createUserSchema.safeParse(request.body);
             if(!credentials.success){
                 console.log(credentials.error.errors[0].message)
                 return response.json(credentials.error.errors[0].message)
@@ -37,7 +30,6 @@ export class CreateUserController {
                 account: {
                     create: {}
                 }
-                
             }
             })
             return response.json(user);   
