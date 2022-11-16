@@ -14,20 +14,21 @@ model User {
   id String @id @default(uuid())
   username String @unique
   password String @unique
-  accountId String
-  account Account @relation(fields: [accountId], references: [id])
+
+  accountId String @unique
+  account Account @relation(fields: [accountId], references: [id]) 
 
   @@map("users")
 }
 
 model Account {
   id String @id @default(uuid())
-  balance String
-
-  @@map("accounts")
-  User User[]
+  balance Decimal @default(100)
+  user User?
+  
   CreditedReference Transaction[] @relation("CreditedRelation")
   DebitedReference Transaction[] @relation("DebitedRelation")
+  @@map("accounts")
 }
 
 model Transaction {
@@ -36,8 +37,8 @@ model Transaction {
   debitedAccount Account @relation(fields: [debitedAccountId], references: [id], name: "DebitedRelation")
   creditedAccountId String 
   creditedAccount Account @relation(fields: [creditedAccountId], references: [id], name: "CreditedRelation")
-  value String?
+  value Decimal
   created_at DateTime @default(now())
-  
+
   @@map("transactions")
 }
