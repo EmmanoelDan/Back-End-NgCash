@@ -1,57 +1,29 @@
 import { Request, Response } from "express";
 import { prismaClient } from "../database/prismaClient";
+import { AccountService } from "../services/UserDebitService";
+import { UseCreditService } from "../services/UserCreditService";
 
 class TransactionsUsersController {
     async handle(request: Request, response: Response){
         const {id} = request.user
         const {creditedAccount, username, value} = request.body;
-        
-        const userDebited = await prismaClient.user.findFirst({
-            where: {
-                id: id
-            }
+
+        const userDebited = new AccountService;
+        const userCredited = new UseCreditService;
+        const dataDebited = await userDebited.executeUserDebited({
+            id,
+            username,
+            value
         })
 
-        //console.log(userDebited)
-
-        if(!userDebited){
-            return response.json("Error ao realizar tranzacao")
-        }
-
-        //console.log(userDebited.accountId)
-
-        const userCashOut = await prismaClient.account.findFirst({
-            where: {
-                id: userDebited.accountId
-            }
+        const dataCredited = await userCredited.execute({
+            creditedAccount
         })
 
-        if(userDebited.username === username){
-            return response.json("Voce nao pode fazer auto transaction")
-        }
-
-        if(!userCashOut){
-            return response.json("Ërror no usuario debitado")
-        }
-
-        if(value > userCashOut.balance){
-            return response.json("Saldo insuficiente")
-        }
-
-        const userCredited= await prismaClient.user.findFirst({
-            where: {
-                accountId: creditedAccount
-            }, select: {
-                id: true,
-                username: true,
-                accountId: true
-            }
-        })
-
-        if(userDebited.accountId === userCredited.accountId ){
+        if(dataDebited.userDebited.accountId === dataCredited.accountId ){
             return response.json("Nao pode ser auto transfer")
         }
-        if(username != userCredited.username ){
+        if(username != dataCredited.username ){
             return response.json("Not")
         }
 
@@ -61,7 +33,7 @@ class TransactionsUsersController {
 
         const userCashIn = await prismaClient.account.findFirst({
             where: {
-                id: userCredited.accountId
+                id: dataCredited.accountId
             }
         })
 
@@ -69,13 +41,13 @@ class TransactionsUsersController {
             return response.json("Error in transaction")
         }
 
-        const balanceCashOut = Number(userCashOut.balance) - (parseFloat(value));
-        const balanceCashIn = Number(userCashIn.balance) + (parseFloat(value));
+        const balanceCashOut = Number(dataDebited.userCashOut.balance) - Number(value);
+        const balanceCashIn = Number(userCashIn.balance) + Number(value);
 
         const transaction = await prismaClient.transaction.create({
             data: {
-                debitedAccountId: userDebited.accountId,
-                creditedAccountId: userCredited.accountId,
+                debitedAccountId: dataDebited.userDebited.accountId,
+                creditedAccountId: dataCredited.accountId,
                 value: value 
             }
         })
@@ -91,7 +63,7 @@ class TransactionsUsersController {
 
         await prismaClient.account.update({
             where: {
-                id: userCashOut.id
+                id: dataDebited.userCashOut.id
             }, data: {
                 balance: balanceCashOut
             }
@@ -100,6 +72,7 @@ class TransactionsUsersController {
         return response.json(transaction);
 
     }
+    
 }
 
 export {TransactionsUsersController}

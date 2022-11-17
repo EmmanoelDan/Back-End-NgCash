@@ -1,8 +1,5 @@
 import { Request, Response } from "express";
 import { prismaClient } from "../database/prismaClient";
-import { UserBalanceService } from "../services/UserBalanceService";
-
-
 
 class UserBalanceController {
     async handle(request: Request, response: Response){

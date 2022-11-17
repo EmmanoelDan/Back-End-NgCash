@@ -2,6 +2,7 @@ import { Router } from "express";
 import { AuthUserController } from "./controllers/AuthUserController";
 //import { CreateAccountController } from "./controllers/CreateAccountController";
 import { CreateUserController } from "./controllers/CreateUserController";
+//import { testController } from "./controllers/AmountController";
 import { TransactionsUsersController } from "./controllers/TransactionUsersController";
 import { UserBalanceController } from "./controllers/UserBalanceController";
 import { isAuthenticate } from "./middlewares/isAuthenticate";

@@ -20,7 +20,7 @@ class CreateUserController {
     
             const credentials = createUserSchema.safeParse(request.body);
             if(!credentials.success){
-                console.log(credentials)
+                console.log(credentials[0])
                 return response.json(credentials)
             }
     
