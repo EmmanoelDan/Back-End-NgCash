@@ -5,7 +5,7 @@ import { UserBalanceService } from "../services/UserBalanceService";
 
 class UserBalanceController {
     async handle(request: Request, response: Response){
-        const user_id = request.user_id;
+        const {user_id} = request.body;
 
         const userBalance = new UserBalanceService();
         const user = await userBalance.execute(user_id);
