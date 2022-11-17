@@ -1,4 +1,4 @@
-import jwt from "jsonwebtoken";
+import jwt, { verify } from "jsonwebtoken";
 import jwtConfig from "../../config/jwtConfig"
 import { NextFunction, Request, Response } from "express"
 
@@ -11,8 +11,10 @@ export function isAuthenticate (
 ){
     try {
         const token = request.headers.authorization.split(' ')[1]
-        const {id} = jwt.verify(token, jwtConfig.secretKey) as unknown as Payload;;
-        request.user_id = id;
+        const {id} = jwt.verify(token, jwtConfig.secretKey) as unknown as Payload;
+        request.user = {
+            id: String(id)
+        }
 
         return next()
     } catch (error) {

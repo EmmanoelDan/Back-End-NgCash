@@ -1,16 +1,26 @@
 import { Request, Response } from "express";
+import { prismaClient } from "../database/prismaClient";
 import { UserBalanceService } from "../services/UserBalanceService";
 
 
 
 class UserBalanceController {
     async handle(request: Request, response: Response){
-        const {user_id} = request.body;
+        const { id } = request.user;
 
-        const userBalance = new UserBalanceService();
-        const user = await userBalance.execute(user_id);
-        
-        return response.json(user)
+        const user = await prismaClient.user.findFirst({
+            where: {
+                id: id
+            }
+        })
+
+        const account = await prismaClient.account.findFirst({
+            where: {
+                id: user.accountId
+            }
+        })
+
+        return response.json(account)
     }
 }
 

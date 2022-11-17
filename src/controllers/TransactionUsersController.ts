@@ -3,33 +3,32 @@ import { prismaClient } from "../database/prismaClient";
 
 class TransactionsUsersController {
     async handle(request: Request, response: Response){
-        const {debitedAccountId, creditedAccount, username, value} = request.body;
-
+        const {id} = request.user
+        const {creditedAccount, username, value} = request.body;
+        
         const userDebited = await prismaClient.user.findFirst({
             where: {
-                accountId: debitedAccountId
-            }, select: {
-                id: true,
-                username: true,
-                accountId: true
+                id: id
             }
         })
+
+        //console.log(userDebited)
 
         if(!userDebited){
             return response.json("Error ao realizar tranzacao")
         }
 
-        if(userDebited.username === username){
-            return response.json("Voce nao pode fazer auto transaction")
-        }
-
-        console.log(userDebited.accountId)
+        //console.log(userDebited.accountId)
 
         const userCashOut = await prismaClient.account.findFirst({
             where: {
                 id: userDebited.accountId
             }
         })
+
+        if(userDebited.username === username){
+            return response.json("Voce nao pode fazer auto transaction")
+        }
 
         if(!userCashOut){
             return response.json("Ërror no usuario debitado")
@@ -48,6 +47,13 @@ class TransactionsUsersController {
                 accountId: true
             }
         })
+
+        if(userDebited.accountId === userCredited.accountId ){
+            return response.json("Nao pode ser auto transfer")
+        }
+        if(username != userCredited.username ){
+            return response.json("Not")
+        }
 
         if(!userCredited){
             return response.json("Usuario nao existe")
