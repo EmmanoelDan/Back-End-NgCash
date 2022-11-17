@@ -1,11 +1,12 @@
-import { prismaClient } from "../database/prismaClient"
+import { prismaClient } from "../database/prismaClient";
 
-interface IAccountRequest {
-    creditedAccount: String
+interface IAccountCredit {
+    creditedAccount: String,
+    username: String
 }
 
 class UseCreditService {
-    async execute({creditedAccount}: IAccountRequest){
+    async execute({creditedAccount, username}: IAccountCredit){
         const userCredited= await prismaClient.user.findFirst({
             where: {
                 accountId: String (creditedAccount)
@@ -15,6 +16,24 @@ class UseCreditService {
                 accountId: true
             }
         })
+
+        if(username != userCredited.username ){
+            throw new Error("Error")
+        }
+
+        if(!userCredited){
+            throw new Error("Error")
+        }
+
+        const userCashIn = await prismaClient.account.findFirst({
+            where: {
+                id: userCredited.accountId
+            }
+        })
+
+        if(!userCashIn){
+            throw new Error("Error")
+        }
 
         return userCredited;
     }

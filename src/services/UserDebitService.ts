@@ -1,15 +1,13 @@
 import { prismaClient } from "../database/prismaClient";
 
-
-interface IAccount {
+interface IAccountDebit {
     id: String,
     username: String,
     value: Number
 }
 
-
-class AccountService {
-    async executeUserDebited({id, username, value} : IAccount) {
+class UserDebitedService {
+    async executeUserDebited({id, username, value} : IAccountDebit) {
         const userDebited = await prismaClient.user.findFirst({
             where: {
                 id: String (id)
@@ -31,7 +29,7 @@ class AccountService {
         }
 
         if(!userCashOut){
-            throw new Error("Ërror no usuario debitado")
+            throw new Error("Error no usuario debitado")
         }
 
         const valor = await getValue(value)
@@ -53,4 +51,4 @@ async function getValue(value: Number) {
     return value;
 }
 
-export { AccountService }
+export { UserDebitedService }

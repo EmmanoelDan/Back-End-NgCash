@@ -3,10 +3,10 @@ import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import "../../config/jwtConfig";
 import jwtConfig from "../../config/jwtConfig"
-import { AuthUserInterface } from "../interfaces/AuthUserInterface";
+import { IAuthUserInterface } from "../interfaces/AuthUserInterface";
 
 class AuthUserService {
-    async execute({ username, password }: AuthUserInterface) {
+    async execute({ username, password }: IAuthUserInterface) {
         const user = await prismaClient.user.findFirst({
             where: {
                 username
