@@ -1,5 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
-import { router } from "./routes";
+import { router } from "./routes/routes";
 import cors from "cors";
 
 const port = 3000;

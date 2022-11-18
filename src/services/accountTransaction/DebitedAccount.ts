@@ -1,4 +1,4 @@
-import { prismaClient } from "../database/prismaClient";
+import { prismaClient } from "../../database/prismaClient";
 
 interface IAccountDebit {
     id: String,
@@ -6,7 +6,7 @@ interface IAccountDebit {
     value: Number
 }
 
-class UserDebitedService {
+class DebitedAccount {
     async executeUserDebited({id, username, value} : IAccountDebit) {
         const userDebited = await prismaClient.user.findFirst({
             where: {
@@ -23,6 +23,8 @@ class UserDebitedService {
                 id: userDebited.accountId
             }
         })
+
+        console.log(userDebited.username)
 
         if(userDebited.username === username){
             throw new Error("Voce nao pode fazer auto transaction")
@@ -51,4 +53,5 @@ async function getValue(value: Number) {
     return value;
 }
 
-export { UserDebitedService }
+
+export {DebitedAccount}

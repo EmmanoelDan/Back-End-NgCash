@@ -11,9 +11,9 @@ export function isAuthenticate (
 ){
     try {
         const token = request.headers.authorization.split(' ')[1]
-        const {id} = jwt.verify(token, jwtConfig.secretKey) as unknown as Payload;
+        const { id } = jwt.verify(token, jwtConfig.secretKey) as unknown as Payload;
         request.user = {
-            id: String(id)
+            id: id
         }
 
         return next()
