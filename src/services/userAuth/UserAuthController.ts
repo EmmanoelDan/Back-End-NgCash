@@ -5,11 +5,16 @@ class UserAuthController {
     constructor(private serverAuth: UserAuthService){}
 
     async handle(request: Request, response: Response){
-        const {username, password} = request.body;
+        try {
+            const {username, password} = request.body;
 
-        const user = await this.serverAuth.execute({username, password})
+            const user = await this.serverAuth.execute({username, password})
         
-        return response.json(user)
+            return response.send(200).json({sucess: true, data: user})   
+        } catch (error) {
+            return response.json({sucess: false, error: error.message})
+        }
+        
     }   
 }
 

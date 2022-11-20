@@ -6,12 +6,18 @@ export class BalanceController {
     }
 
     async handle(request: Request, response: Response){
-        const { id } = request.user;
 
-        const balance = await this.balanceService.execute({id})
+        try {
+            const { id } = request.user;
 
-        return response.json(balance)
+            const balance = await this.balanceService.execute({id})
 
+            return response.json({sucess: true, data: balance})
+
+        } catch (error) {
+            return response.json({sucess: true, error: error.message})
+        }
+        
     }
 
 }

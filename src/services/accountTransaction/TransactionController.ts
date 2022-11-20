@@ -6,13 +6,18 @@ export class TransactionController {
     }
 
     async handle(request: Request, response: Response){
-        const { id } = request.user;
+        try {
+            const { id } = request.user;
         
-        const {creditedAccountId, username, value} = request.body;
+            const {creditedAccountId, username, value} = request.body;
 
-        const transaction = await this.transactionService.execute({id, creditedAccountId, username, value})
+            const transaction = await this.transactionService.execute({id, creditedAccountId, username, value})
 
-        return response.json(transaction)
+            return response.status(200).json({sucess: true, data: transaction})
+        } catch (error) {
+            return response.json(error.message)
+        }
+        
 
     }
 

@@ -8,20 +8,20 @@ import { userAuthFactory } from "../services/userAuth/UserAuthFactory";
 
 const router = Router();
 
-router.post("/v1/users", (request, response) => {
+router.post("/user", (request, response) => {
     createUserFactory().handle(request, response)
 })
-router.post("/v1/sign", (request, response) => {
+router.post("/user/login", (request, response) => {
     userAuthFactory().handle(request, response)
 })
-router.get("/v1/profile", isAuthenticate, (request, response) => {
+router.get("/user/account", isAuthenticate, (request, response) => {
     balanceFactory().handle(request, response)
 })
 
-router.post("/v1/transactions", isAuthenticate, (request, response) => {
+router.post("/account/transactions", isAuthenticate, (request, response) => {
     transactionFactory().handle(request, response)
 })
-router.post("/v1/transactions/test", isAuthenticate, (request, response) => {
+router.post("/account/transactions/test", isAuthenticate, (request, response) => {
     filteringFactory().handle(request, response)
 })
 
