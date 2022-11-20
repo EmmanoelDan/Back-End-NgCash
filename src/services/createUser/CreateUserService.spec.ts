@@ -3,9 +3,6 @@ import { UserRepositoryInMemory } from "../../repositories/in-memory/UserReposit
 import { IUserRepository } from "../../repositories/IUserRepositories"
 import { CreateUserService } from "./CreateUserService";
 
-
-
-
 describe("Create user", () => {
     let usersRepository: IUserRepository;
     let createUserService: CreateUserService;
@@ -36,7 +33,7 @@ describe("Create user", () => {
       await createUserService.execute(userData);
   
       await expect(createUserService.execute(userData)).rejects.toEqual(
-        new Error("User already exists!")
+        new Error("User Already Exists!!")
       );
     });
   });
