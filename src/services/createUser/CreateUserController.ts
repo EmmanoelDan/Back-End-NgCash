@@ -11,7 +11,8 @@ class CreateUserController {
 
             const user = await this.createUser.execute({username, password})
             
-            return response.status(200).json({sucess: true, data: user}) 
+            return response.status(200).json({sucess: true, data: user})
+            
         } catch (error) {
             return response.json({sucess: false, error: error.message})
         }
