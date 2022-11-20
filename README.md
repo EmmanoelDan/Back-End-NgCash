@@ -4,6 +4,13 @@
 
 # Getting started
 
+## Stack Required
+
+ - Node
+ - Typescript
+ - PrismaORM
+ - Docker
+
 ## Installation
 
 Clone the repository
