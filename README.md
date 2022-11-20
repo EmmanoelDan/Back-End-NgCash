@@ -160,4 +160,4 @@ This applications uses JSON Web Token (JWT) to handle authentication. The token 
  
 # Swagger API docs
 
-   
+   http://localhost:3000/docs/#/transactions/accountId
