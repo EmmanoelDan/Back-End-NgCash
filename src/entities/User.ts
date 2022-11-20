@@ -1,3 +1,8 @@
+/***
+ * Entitie User:
+ * Get Intancesof the entities, used in database
+ */
+
 class User {
     id?: String;
     username: String;

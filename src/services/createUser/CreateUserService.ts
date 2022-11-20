@@ -1,7 +1,7 @@
 import { User } from "../../entities/User";
 import { hash } from "bcryptjs";
 import { IUserRepository} from "../../repositories/IUserRepositories";
-import z, { discriminatedUnion } from "zod"
+import z from "zod"
 
 interface CreateUserRequest {
     username: String,

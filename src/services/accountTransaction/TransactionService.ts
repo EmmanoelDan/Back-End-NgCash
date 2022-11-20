@@ -30,7 +30,7 @@ class TransactionService {
         })
 
         if(dataDebited.userDebited.accountId === dataCredited.accountId ){
-            throw new Error("Nao pode ser auto transfer")
+            throw new Error("Can't do self-transfer!")
         }
 
         const userCashIn = await prismaClient.account.findFirst({
@@ -40,7 +40,7 @@ class TransactionService {
         })
 
         if(!userCashIn){
-            throw new Error("Nao pode ser auto transfer")
+            throw new Error("User Already Exists!")
         }
 
         const balanceCashOut = Number(dataDebited.userCashOut.balance) - Number(value);

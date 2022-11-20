@@ -1,3 +1,8 @@
+/***
+ * Entitie Transaction:
+ *  Get intancesof the entities, used in database
+ */
+
 class Transaction {
     id?: string;
     debitedAccountId?: string;

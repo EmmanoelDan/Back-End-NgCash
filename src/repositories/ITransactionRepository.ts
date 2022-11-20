@@ -1,5 +1,7 @@
 import { Transaction } from "../entities/Transaction"
 
+// Contract Transaction Entities
+
 export interface ITransactionRepository {
     create(user: Transaction): Promise<Transaction>
     filterDebited(user: Transaction): Promise<Transaction>
