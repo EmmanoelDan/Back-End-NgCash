@@ -17,14 +17,14 @@ class CreditedAccount {
             }
         })
 
-        console.log(userCredited.username)
+        //console.log(userCredited.username)
 
         if(username != userCredited.username){
-            throw new Error("Error")
+            throw new Error("Username incorrect !")
         }
 
         if(!userCredited){
-            throw new Error("Error")
+            throw new Error("User incorrect!")
         }
 
         return userCredited;

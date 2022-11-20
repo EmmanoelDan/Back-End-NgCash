@@ -24,7 +24,7 @@ model User {
 model Account {
   id String @id @default(uuid())
   balance Decimal @default(100)
-  user User?
+  user User[]
   
   CreditedReference Transaction[] @relation("CreditedRelation")
   DebitedReference Transaction[] @relation("DebitedRelation")
@@ -37,7 +37,7 @@ model Transaction {
   debitedAccount Account @relation(fields: [debitedAccountId], references: [id], name: "DebitedRelation")
   creditedAccountId String 
   creditedAccount Account @relation(fields: [creditedAccountId], references: [id], name: "CreditedRelation")
-  value Decimal
+  value Float
   created_at DateTime @default(now())
 
   @@map("transactions")

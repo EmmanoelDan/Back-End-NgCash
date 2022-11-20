@@ -1,21 +1,22 @@
 class Transaction {
-    id?: String;
+    id?: string;
     debitedAccountId?: string;
     creditedAccountId?: string;
-    data?;
+    accountId?;
+    date?;
     value?
-  
-    private constructor({debitedAccountId, creditedAccountId, data, value }: Transaction) {
+    private constructor({debitedAccountId, creditedAccountId,accountId, date, value }: Transaction) {
       return Object.assign(this, {
         debitedAccountId,
         creditedAccountId,
-        data,
-        value
+        accountId,
+        date,
+        value,
       });
     }
   
-    static create({ debitedAccountId, creditedAccountId, data, value }: Transaction) {
-      const transaction = new Transaction({ debitedAccountId, creditedAccountId, data, value });
+    static create({ debitedAccountId, creditedAccountId, accountId, date, value }: Transaction) {
+      const transaction = new Transaction({ debitedAccountId, creditedAccountId, accountId, date, value });
       return transaction;
     }
   }

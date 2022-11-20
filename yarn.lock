@@ -1261,6 +1261,11 @@
     "shebang-command" "^2.0.0"
     "which" "^2.0.1"
 
+"date-format@^4.0.14":
+  "integrity" "sha512-39BOQLs9ZjKh0/patS9nrT8wc3ioX3/eA/zgbKNopnF2wCqJEoxywwwElATYvRsXdnOxA/OQeQoFZ3rFjVajhg=="
+  "resolved" "https://registry.npmjs.org/date-format/-/date-format-4.0.14.tgz"
+  "version" "4.0.14"
+
 "debug@^4.1.0":
   "integrity" "sha512-PRWFHuSU3eDtQJPvnNY7Jcket1j0t5OuOsFzPPzsekD52Zl8qUfFIPEiswXqIvHWGVHOgX+7G/vCNNhehwxfkQ=="
   "resolved" "https://registry.npmjs.org/debug/-/debug-4.3.4.tgz"

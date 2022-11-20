@@ -10,9 +10,9 @@ class UserAuthController {
 
             const user = await this.serverAuth.execute({username, password})
         
-            return response.send(200).json({sucess: true, data: user})   
+            return response.json({sucess: true, data: user})   
         } catch (error) {
-            return response.json({sucess: false, error: error.message})
+            return response.status(400).json({sucess: false, error: error.message, status: error.status})
         }
         
     }   

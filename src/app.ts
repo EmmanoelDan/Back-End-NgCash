@@ -1,11 +1,15 @@
 import express, { NextFunction, Request, Response } from "express";
 import { router } from "./routes/routes";
 import cors from "cors";
+import swaggerUi from "swagger-ui-express";
+import swaggerFile from '../swagger.json'
 
 const app = express();
 app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 
 app.use(router);
 

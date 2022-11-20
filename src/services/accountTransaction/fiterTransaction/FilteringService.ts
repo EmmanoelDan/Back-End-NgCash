@@ -19,26 +19,28 @@ class FilteringService {
             }
         })
 
+        console.log(user.accountId)
+
         const dataFilterCashIn = Transaction.create({
-            data: date,
-            creditedAccountId: user.accountId
+            date: date,
+            creditedAccountId: user?.accountId
         })
         
         const dataFilterCashOut = Transaction.create({
-            data: date,
-            debitedAccountId: user.accountId
+            date: date,
+            debitedAccountId: user?.accountId
         })
 
         const data = Transaction.create({
-            data: date
+            date: date
         })
 
         const credited = Transaction.create({
-            creditedAccountId: user.accountId
+            creditedAccountId: user?.accountId
         })
 
         const debited = Transaction.create({
-            debitedAccountId: user.accountId
+            debitedAccountId: user?.accountId
         })
 
         let filtering;
@@ -46,6 +48,7 @@ class FilteringService {
         if(date || transaction) {
             if(date && transaction){
                 if(String(transaction).toLocaleLowerCase() === "CashIn"){
+                    
                     filtering = await this.transaction.filterCredited(dataFilterCashIn)
                 }
 

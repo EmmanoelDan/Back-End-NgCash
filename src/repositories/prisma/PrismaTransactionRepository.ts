@@ -19,9 +19,9 @@ class PrismaTransactionRepository implements ITransactionRepository{
         const filter = await prismaClient.transaction.findMany({
             where: {
                 created_at: {
-                    gte: user.data
+                    gte: user.date
                 },
-                debitedAccountId: user?.debitedAccountId
+                creditedAccountId: user.accountId
             }
         })
 
@@ -32,8 +32,9 @@ class PrismaTransactionRepository implements ITransactionRepository{
         const filter = await prismaClient.transaction.findMany({
             where: {
                 created_at: {
-                    gte: user.data
-                }
+                    gte: user.date
+                },
+                creditedAccountId: user.accountId
             }
         })
 
@@ -43,7 +44,7 @@ class PrismaTransactionRepository implements ITransactionRepository{
     async credited(user: Transaction): Promise<Transaction> {
         const filter = await prismaClient.transaction.findMany({
             where: {
-                creditedAccountId: user.creditedAccountId
+                id: user.accountId
             }
         })
 
@@ -53,7 +54,7 @@ class PrismaTransactionRepository implements ITransactionRepository{
     async debited(user: Transaction): Promise<Transaction> {
         const filter = await prismaClient.transaction.findMany({
             where: {
-                debitedAccountId: user.creditedAccountId
+                id: user.accountId
             }
         })
 

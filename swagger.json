@@ -9,10 +9,10 @@
       "version": "1.0.11"
     },
     "paths": {
-      "/user": {
+      "/users": {
         "post": {
           "tags": [
-            "user"
+            "users"
           ],
           "summary": "Create user",
           "description": "This can only be done by the logged in user.",
@@ -22,7 +22,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserRequest"
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
@@ -33,7 +33,7 @@
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/UserResponse"
+                    "$ref": "#/components/schemas/User"
                   }
                 }
               }
@@ -41,76 +41,24 @@
           }
         }
       },
-      "/user/createWithList": {
+      "/users/sign": {
         "post": {
           "tags": [
-            "user"
-          ],
-          "summary": "Creates list of users with given input array",
-          "description": "Creates list of users with given input array",
-          "operationId": "createUsersWithListInput",
-          "requestBody": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            }
-          },
-          "responses": {
-            "200": {
-              "description": "Successful operation",
-              "content": {
-                "application/json": {
-                  "schema": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                },
-                "application/xml": {
-                  "schema": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                }
-              }
-            },
-            "default": {
-              "description": "successful operation"
-            }
-          }
-        }
-      },
-      "/user/login": {
-        "get": {
-          "tags": [
-            "user"
+            "users"
           ],
           "summary": "Logs user into the system",
           "description": "",
           "operationId": "loginUser",
-          "parameters": [
-            {
-              "name": "username",
-              "in": "query",
-              "description": "The user name for login",
-              "required": false,
-              "schema": {
-                "type": "string"
-              }
-            },
-            {
-              "name": "password",
-              "in": "query",
-              "description": "The password for login in clear text",
-              "required": false,
-              "schema": {
-                "type": "string"
+          "requestBody": {
+            "description": "Created user object",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/sign"
+                }
               }
             }
-          ],
+          },
           "responses": {
             "200": {
               "description": "successful operation",
@@ -131,14 +79,9 @@
                 }
               },
               "content": {
-                "application/xml": {
-                  "schema": {
-                    "type": "string"
-                  }
-                },
                 "application/json": {
                   "schema": {
-                    "type": "string"
+                    "$ref": "#/components/schemas/signResponse"
                   }
                 }
               }
@@ -149,248 +92,100 @@
           }
         }
       },
-      "/user/logout": {
+      "/accounts": {
         "get": {
           "tags": [
-            "user"
+            "accounts"
           ],
-          "summary": "Logs out current logged in user session",
-          "description": "",
-          "operationId": "logoutUser",
-          "parameters": [],
+          "summary": "Account exists, check balance account",
+          "description": "To search for an account amount, you must generate an Access Token, that is, only registered users can check their balances. OBS: To use this route, you must first generate a JWT token. Simply log in, copy and paste the authorization button right on the padlock next to the route.",
+          "operationId": "accountId",
+          "security": [
+            {
+                "bearerAuth": []
+            }
+          ],
           "responses": {
             "default": {
-              "description": "successful operation"
-            }
-          }
-        }
-      },
-      "/user/{username}": {
-        "get": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Get user by user name",
-          "description": "",
-          "operationId": "getUserByName",
-          "parameters": [
-            {
-              "name": "username",
-              "in": "path",
-              "description": "The name that needs to be fetched. Use user1 for testing. ",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "200": {
               "description": "successful operation",
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": "#/components/schemas/User"
-                  }
-                },
-                "application/xml": {
-                  "schema": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/account"
                   }
                 }
               }
-            },
-            "400": {
-              "description": "Invalid username supplied"
-            },
-            "404": {
-              "description": "User not found"
-            }
-          }
-        },
-        "put": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Update user",
-          "description": "This can only be done by the logged in user.",
-          "operationId": "updateUser",
-          "parameters": [
-            {
-              "name": "username",
-              "in": "path",
-              "description": "name that need to be deleted",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "requestBody": {
-            "description": "Update an existent user in the store",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/xml": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              },
-              "application/x-www-form-urlencoded": {
-                "schema": {
-                  "$ref": "#/components/schemas/User"
-                }
-              }
-            }
-          },
-          "responses": {
-            "default": {
-              "description": "successful operation"
-            }
-          }
-        },
-        "delete": {
-          "tags": [
-            "user"
-          ],
-          "summary": "Delete user",
-          "description": "This can only be done by the logged in user.",
-          "operationId": "deleteUser",
-          "parameters": [
-            {
-              "name": "username",
-              "in": "path",
-              "description": "The name that needs to be deleted",
-              "required": true,
-              "schema": {
-                "type": "string"
-              }
-            }
-          ],
-          "responses": {
-            "400": {
-              "description": "Invalid username supplied"
-            },
-            "404": {
-              "description": "User not found"
             }
           }
         }
+      },
+      "/transactions": {
+        "post": {
+            "tags": [
+              "transactions"
+            ],
+            "summary": "Create user",
+            "description": "This can only be done by the logged in user.",
+            "operationId": "accountId",
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+              ],
+            "requestBody": {
+              "description": "Created user object",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/transaction"
+                  }
+                }
+              }
+            },
+            "responses": {
+              "default": {
+                "description": "successful operation",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/transaction"
+                    }
+                  }
+                }
+              }
+            }
+          }
+      },
+      "/transactions/index": {
+        "get": {
+            "tags": [
+              "transactions"
+            ],
+            "summary": "Transactions history user",
+            "description": "This can only be done by the logged in user.",
+            "operationId": "accountId",
+            "security": [
+                {
+                    "bearerAuth": []
+                }
+              ],
+            "responses": {
+              "default": {
+                "description": "successful operation",
+                "content": {
+                  "application/json": {
+                    "schema": {
+                      "$ref": "#/components/schemas/history"
+                    }
+                  }
+                }
+              }
+            }
+          }
       }
     },
     "components": {
       "schemas": {
-        "Order": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "format": "int64",
-              "example": 10
-            },
-            "petId": {
-              "type": "integer",
-              "format": "int64",
-              "example": 198772
-            },
-            "quantity": {
-              "type": "integer",
-              "format": "int32",
-              "example": 7
-            },
-            "shipDate": {
-              "type": "string",
-              "format": "date-time"
-            },
-            "status": {
-              "type": "string",
-              "description": "Order Status",
-              "example": "approved",
-              "enum": [
-                "placed",
-                "approved",
-                "delivered"
-              ]
-            },
-            "complete": {
-              "type": "boolean"
-            }
-          },
-          "xml": {
-            "name": "order"
-          }
-        },
-        "Customer": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "format": "int64",
-              "example": 100000
-            },
-            "username": {
-              "type": "string",
-              "example": "fehguy"
-            },
-            "address": {
-              "type": "array",
-              "xml": {
-                "name": "addresses",
-                "wrapped": true
-              },
-              "items": {
-                "$ref": "#/components/schemas/Address"
-              }
-            }
-          },
-          "xml": {
-            "name": "customer"
-          }
-        },
-        "Address": {
-          "type": "object",
-          "properties": {
-            "street": {
-              "type": "string",
-              "example": "437 Lytton"
-            },
-            "city": {
-              "type": "string",
-              "example": "Palo Alto"
-            },
-            "state": {
-              "type": "string",
-              "example": "CA"
-            },
-            "zip": {
-              "type": "string",
-              "example": "94301"
-            }
-          },
-          "xml": {
-            "name": "address"
-          }
-        },
-        "Category": {
-          "type": "object",
-          "properties": {
-            "id": {
-              "type": "integer",
-              "format": "int64",
-              "example": 1
-            },
-            "name": {
-              "type": "string",
-              "example": "Dogs"
-            }
-          },
-          "xml": {
-            "name": "category"
-          }
-        },
         "UserRequest": {
           "type": "object",
           "properties": {
@@ -404,24 +199,75 @@
             }
           }
         },
-        "UserResponse": {
+        "sign":{
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string",
+                "example": "John"
+              },
+              "password": {
+                "type": "string",
+                "example": "12345AdsW"
+              }
+            }
+
+        },
+        "signResponse": {
+            "type": "object",
+            "properties": {
+                "sucess": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "data": {
+                    "type": "array",
+                    "example": {
+                        "id": "0c01f685-1348-4085-a027-eed669ca59bd",
+                        "username": "John",
+                        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjBjMDFmNjg1LTEzNDgtNDA4NS1hMDI3LWVlZDY2OWNhNTliZCIsInVzZXJuYW1lIjoiSm9obiIsImlhdCI6MTY2ODkwNjIzOSwiZXhwIjoxNjY4OTkyNjM5fQ.f6SaPiSECIjaL5iTiA8P3zpRCV8KtU5z1_lZU5QaQcI"
+                    } 
+                }   
+          }
+        },
+        "account": {
             "type": "object",
             "properties": {
                 "id": {
                     "type": "string",
-                    "example": "ba552201-75d2-4a1c-be3d-ce7f2871e5f7"
+                    "example": "4a74838b-31e1-4bd0-abd9-1e6fb9dcc179"
+                },
+                "balance": {
+                    "type": "Decimal",
+                    "example": 100 
+                }   
+          }
+        },
+        "transaction": {
+            "type": "object",
+            "properties": {
+                "creditedAccount": {
+                    "type": "string",
+                    "description":"You must add an existing accountId that is not your",
+                    "example": "f9a67802-8f3b-4008-b3af-4f4d5f113eb4"
                 },
                 "username": {
                     "type": "string",
-                    "example": "John"
+                    "example": "Francisco Gabriel" 
                 },
-                "password": {
+                "value": {
+                    "type": "decimal",
+                    "example": 20
+                } 
+          }
+        },
+        "history": {
+            "type": "object",
+            "properties": {
+                "date": {
                     "type": "string",
-                    "example": "$2a$08$mHY.rPHpJsFRRwtSs9KZKeux4WXoz6pa1kU/pgz4UWn4JSX8vLOqC"
-                },
-                "AccountId": {
-                    "type": "string",
-                    "example": "ab87b2f8-89ea-47e4-b02f-b7e1a51d147e"
+                    "description":"You must add an existing accountId that is not your",
+                    "example": "2022-11-20T01:52:07.484Z"
                 }
           }
         },
@@ -445,21 +291,6 @@
         }
       },
       "requestBodies": {
-        "Pet": {
-          "description": "Pet object that needs to be added to the store",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            },
-            "application/xml": {
-              "schema": {
-                "$ref": "#/components/schemas/Pet"
-              }
-            }
-          }
-        },
         "UserArray": {
           "description": "List of user object",
           "content": {
@@ -475,22 +306,10 @@
         }
       },
       "securitySchemes": {
-        "petstore_auth": {
-          "type": "oauth2",
-          "flows": {
-            "implicit": {
-              "authorizationUrl": "https://petstore3.swagger.io/oauth/authorize",
-              "scopes": {
-                "write:pets": "modify pets in your account",
-                "read:pets": "read your pets"
-              }
-            }
-          }
-        },
-        "api_key": {
-          "type": "apiKey",
-          "name": "api_key",
-          "in": "header"
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
         }
       }
     }
