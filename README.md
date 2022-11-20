@@ -158,6 +158,9 @@ This applications uses JSON Web Token (JWT) to handle authentication. The token 
 
 ----------
  
-# Swagger API docs
+# Swagger API docs Route
 
-   http://localhost:3000/docs/#/transactions/accountId
+As it is under development, it does not have the online link of the swagger documentation. When you start the server, you can pick up, and even test with the documentation, which is on the route:
+
+    Example:
+    http://localhost:3000/docs/
