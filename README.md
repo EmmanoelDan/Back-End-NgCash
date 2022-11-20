@@ -69,7 +69,7 @@ The database tables are now set up and the prisma client is generated. For more 
 
 The api aims to simulate a transfer system for duly registered users. Then we have all the routes of its functionality:
 
-####Users
+#### Users
 
     POST /users
 
@@ -81,6 +81,8 @@ Creates a new user in the database, which must have at least 3 letters in the us
             "password": "pAsSw0rd"
         }
 
+----------
+
     POST/user/sign
 
 The registered user can access his account, through a username and a valid password of (8) digits. And an access token is generated, with 24 hours to expire.
@@ -91,7 +93,7 @@ The registered user can access his account, through a username and a valid passw
             "password": "pAsSw0rd"
         }
 
-####Accounts
+#### Accounts
 
     GET /Accounts
 
@@ -107,7 +109,7 @@ The only objective is to search for the balances of each created account. These 
 
 You must pass the header in your request.
 
-####Transactions
+#### Transactions
 
     POST / Transactions
 
@@ -126,20 +128,22 @@ In these routes, we have the general objective of the project. Which is to be ab
         "value": 2000
     }
 
-
-GET /transactions/index
+----------
+    GET /transactions/index
 
 In this route, we were able to search for transfers by individual users. Categorized by transfers sent and received. And you need a valid token!
 
-🇧🇷
-       "Authorization": "Bearer [Token]",
-       "Content-Type:" "application/json"
-🇧🇷
+
+    {
+        "Authorization": "Bearer [Token]",
+        "Content-Type:" "application/json"
+        }
+
 
 An implementation in this route is the search for transactions by date. Just pass the date through the query, and its value in the generated timestamp.
-🇧🇷
-       "date": "2022-11-20T04:04:11.769Z"
-🇧🇷
+        {
+            "date": "2022-11-20T04:04:11.769Z"
+        }
 ----------
 
 ## Start application
